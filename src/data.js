@@ -23,6 +23,8 @@ export const sliderItems = [
   },
 ];
 
+//!categories
+
 export const categories = [
   {
     id: 1,
@@ -40,6 +42,8 @@ export const categories = [
     title: "LIGHT JACKETS",
   },
 ];
+
+//!popularProducts
 
 export const popularProducts = [
   {
