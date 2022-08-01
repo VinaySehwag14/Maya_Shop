@@ -56,6 +56,7 @@ const Right = styled.div`
 const MenuItem = styled.div`
   font-size: 14px;
   cursor: pointer;
+  margin-left: 25px;
 `;
 
 const Navbar = () => {
@@ -65,14 +66,14 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input /> <Search />
+            <Input /> <Search style={{ color: "gray", fontSize: "16px" }} />
           </SearchContainer>
         </Left>
         <Center>
           <Logo>MAYA SHOP</Logo>
         </Center>
         <Right>
-          <MenuItem>Register</MenuItem>
+          <MenuItem>REGISTER</MenuItem>
           <MenuItem>SIGN IN</MenuItem>
           <MenuItem>
             <Badge badgeContent={4} color="primary">
