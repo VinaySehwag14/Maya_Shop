@@ -5,8 +5,6 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 
-import {} from "../data";
-
 const Info = styled.h1`
   opacity: 0;
   width: 100%;
