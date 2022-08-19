@@ -52,13 +52,14 @@ const ProductList = () => {
       ...filters,
       [e.target.name]: value,
     });
+    // console.log(filters, "this are filters");
   };
 
   return (
     <Container>
       <Navbar />
       <Annoucement />
-      <Title>Dresses</Title>
+      <Title>{cat}</Title>
       <FilterContainer>
         <Filter>
           <FilterText>Filter Products:</FilterText>
@@ -68,6 +69,7 @@ const ProductList = () => {
             <Option>Black</Option>
             <Option>Red</Option>
             <Option>Blue</Option>
+            <Option>Brown</Option>
             <Option>Yellow</Option>
             <Option>Green</Option>
           </Select>
