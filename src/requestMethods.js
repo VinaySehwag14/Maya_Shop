@@ -1,7 +1,6 @@
 import axios from "axios";
 
-const BASE_URL =
-  "https://maya-shop-backend.vercel.app/api/ " || "http://localhost:5000/api/";
+const BASE_URL = process.env.REACT_APP_API || "http://localhost:5000/api/";
 const TOKEN = localStorage.getItem("persist:root")
   ? JSON.parse(JSON.parse(localStorage.getItem("persist:root"))?.user)
       ?.currentUser?.token
