@@ -21,8 +21,8 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `http://localhost:5000/api/products?category=${cat}`
-            : `http://localhost:5000/api/products`
+            ? `https://maya-shop-backend.onrender.com/api/products?category=${cat}`
+            : `https://maya-shop-backend.onrender.com/api/products`
         );
         setProducts(res.data);
         // console.log(products, "this is Prdopro");

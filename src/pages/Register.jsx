@@ -1,5 +1,10 @@
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useCallback, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { register } from "../redux/apiCalls";
+import { useNavigate } from "react-router-dom";
+import { registerSuccess } from "../redux/userRedux";
 
 const Container = styled.div`
   width: 100vw;
@@ -55,22 +60,58 @@ const Button = styled.button`
 `;
 
 const Register = () => {
+  const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+  const { isFetching, error } = useSelector((state) => state.user);
+  const navigate = useNavigate();
+
+  const handleRegister = useCallback(
+    (e) => {
+      e.preventDefault();
+      register(dispatch, { username, email, password });
+      registerSuccess() && navigate("/login");
+    },
+    [username, password, email]
+  );
   return (
     <Container>
       <Wrapper>
         <Title>CREATE AN ACCOUNT</Title>
         <Form>
-          <Input placeholder="name" />
-          <Input placeholder="last name" />
-          <Input placeholder="username" />
-          <Input placeholder="email" />
-          <Input placeholder="password" />
-          <Input placeholder="confirm password" />
+          <Input placeholder="name" type="text" />
+          <Input placeholder="last name" type="text" />
+          <Input
+            placeholder="username"
+            type="text"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+          />
+          <Input
+            placeholder="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+          />
+          <Input
+            placeholder="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
+          <Input placeholder="confirm password" type="password" />
           <Agreement>
             By creating an account, I consent to the processing of my personal
             data in accordance with the <b>PRIVACY POLICY</b>
           </Agreement>
-          <Button>CREATE</Button>
+          <Button onClick={handleRegister} disabled={isFetching}>
+            CREATE
+          </Button>
+          {error && (
+            <span className="text-red-500 block ">Something Went Wrong...</span>
+          )}
         </Form>
       </Wrapper>
     </Container>

@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { KEY } from "../Keys";
 import { userRequest } from "../requestMethods";
+import axios from "axios";
 //* stripe key
 
 const Container = styled.div``;
@@ -163,12 +164,17 @@ const Cart = () => {
   const cart = useSelector((state) => state.cart);
   //* stripe token
   const [stripeToken, setStripeToken] = useState(null);
+  const [orderId, setOrderId] = useState("");
+  const [paymentError, setPaymentError] = useState("");
+  const [paymentSuccess, setPaymentSuccess] = useState(false);
   console.log(cart, "this is cart");
+  console.log(stripeToken, "this is stripeToken🎂");
 
   //*using useHistory for
   const navigate = useNavigate();
 
   const onToken = (token) => {
+    console.log(token, "this is toklen🤷‍♀️");
     setStripeToken(token);
   };
 
@@ -176,24 +182,105 @@ const Cart = () => {
 
   //* using useEffect for handling stripe token
 
-  useEffect(() => {
-    const makeRequest = async () => {
-      try {
-        const res = await userRequest.post("/checkout/payment", {
-          tokenId: stripeToken.id,
-          amount: cart.total * 100,
-        });
-        console.log(res, "this is bakcend rs strupe");
+  // useEffect(() => {
+  //   const makeRequest = async () => {
+  //     try {
+  //       const res = await userRequest.post("/checkout/payment", {
+  //         tokenId: stripeToken.id,
+  //         amount: cart.total * 100,
+  //       });
+  //       console.log(res.data, "this is bakcend ress from stripe 🍺");
+  //       console.log(cart, "this is bakcend cart");
 
-        //* going to success page after payment succession
-        navigate("/success", {
-          stripeData: res.data,
-          products: cart,
-        });
-      } catch {}
+  //       //* going to success page after payment succession
+  //       navigate("/success", {
+  //         stripeData: res.data,
+  //         products: cart,
+  //       });
+  //     } catch {}
+  //   };
+  //   stripeToken && cart.total >= 1 && makeRequest();
+  // }, [stripeToken, cart.total, navigate]);
+
+  useEffect(() => {
+    // Load the Razorpay script
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+
+    // Clean up the script tag on unmount
+    return () => {
+      document.body.removeChild(script);
     };
-    stripeToken && cart.total >= 1 && makeRequest();
-  }, [stripeToken, cart.total, navigate]);
+  }, []);
+
+  const openCheckout = async () => {
+    try {
+      const res = await axios.post(
+        "https://maya-shop-backend.onrender.com/api/razorpay/payment",
+        {
+          amount: cart.total * 2000, // set the payment amount here
+        }
+      );
+
+      console.log(res.data, "this res.data for setting in state");
+      setOrderId(res.data.orderId);
+
+      // Load the Razorpay checkout form
+      const options = {
+        key: "rzp_test_5Lk8DNtlUH6L3E", // replace with your Razorpay key ID
+        amount: res.data.amount,
+        currency: "INR",
+        name: "My App",
+        description: "Payment for My App",
+        order_id: res.data.id,
+        handler: function (response) {
+          console.log(response);
+          // Call the payment success API to complete the payment
+          axios
+            .post(
+              "https://maya-shop-backend.onrender.com/api/razorpay/capture",
+              {
+                orderId: orderId,
+                paymentId: response.razorpay_payment_id,
+                signature: response.razorpay_signature,
+              }
+            )
+
+            .then((res) => {
+              console.log(res.data);
+              setPaymentSuccess(true);
+            })
+            .catch((err) => {
+              console.log(err);
+              setPaymentError(err.message);
+            });
+        },
+        prefill: {
+          email: "test@example.com",
+          contact: "9876543210",
+        },
+        notes: {
+          address: "Razorpay Corporate Office",
+        },
+      };
+
+      // Check if Razorpay is defined
+      if (window.Razorpay) {
+        const rzp = new window.Razorpay(options);
+        rzp.open();
+      } else {
+        // Retry after 500ms
+        setTimeout(() => {
+          openCheckout();
+        }, 500);
+      }
+    } catch (err) {
+      console.log(err);
+      setPaymentError(err.message);
+    }
+  };
 
   return (
     <Container>
@@ -260,18 +347,7 @@ const Cart = () => {
               <SummaryItemText>Total</SummaryItemText>
               <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
             </SummaryItem>
-            <StripeCheckout
-              name="Maya Shop"
-              image="https://avatars.githubusercontent.com/u/1486366?v=4"
-              billingAddress
-              shippingAddress
-              description={`Your total is $ ${cart.total}`}
-              amount={cart.total * 100}
-              token={onToken}
-              stripeKey={KEY}
-            >
-              <Button>CHECKOUT NOW</Button>
-            </StripeCheckout>
+            <Button onClick={openCheckout}>CHECKOUT NOW</Button>
           </Summary>
         </Bottom>
       </Wrapper>
