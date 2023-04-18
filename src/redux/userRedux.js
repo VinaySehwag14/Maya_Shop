@@ -40,6 +40,7 @@ export const {
   loginStart,
   loginSuccess,
   loginFailure,
+  logout,
   registerStart,
   registerFailure,
   registerSuccess,
