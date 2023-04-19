@@ -47,7 +47,7 @@ const Product = () => {
       try {
         const res = await publicRequest.get("/products/find/" + productId);
         setProduct(res.data);
-        console.log(product, "tjos os prod");
+        // console.log(product, "tjos os prod");
       } catch (err) {
         console.log(err);
       }

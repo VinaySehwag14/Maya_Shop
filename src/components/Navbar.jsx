@@ -44,10 +44,10 @@ const Navbar = () => {
           {!user && (
             <>
               <div className="text-[12px] sm:text-[14px] cursor-pointer ml-[10px] sm:ml-[25px] ">
-                <Link href="/register">REGISTER</Link>
+                <Link to="/register">REGISTER</Link>
               </div>
               <div className="text-[12px] sm:text-[14px] cursor-pointer ml-[10px] sm:ml-[25px] ">
-                <Link href="/login">SIGN IN</Link>
+                <Link to="/login">SIGN IN</Link>
               </div>
             </>
           )}
