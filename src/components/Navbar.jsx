@@ -79,7 +79,7 @@ const Navbar = () => {
               </div>
             </>
           )}
-          <Link to="/cart">
+          <Link to={user ? "/cart" : "/login"}>
             <Badge
               className="ml-[10px] sm:ml-[25px] cursor-pointer"
               badgeContent={quantity}
