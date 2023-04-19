@@ -10,6 +10,7 @@ import { useSelector } from "react-redux";
 
 const App = () => {
   const user = useSelector((state) => state.user.currentUser);
+  // console.log(process.env.REACT_APP_API, "this is env varidables");
 
   return (
     <BrowserRouter>

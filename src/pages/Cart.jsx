@@ -1,166 +1,14 @@
 import { Add, DeleteOutline, Remove } from "@mui/icons-material";
-import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { mobile } from "../responsive";
 import { useDispatch, useSelector } from "react-redux";
-import StripeCheckout from "react-stripe-checkout";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { KEY } from "../Keys";
-import { userRequest } from "../requestMethods";
 import Announcement from "../components/Announcement";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { deleteProduct, emptyCart } from "../redux/cartRedux";
-//* stripe key
-
-const Container = styled.div``;
-
-const Wrapper = styled.div`
-  padding: 20px;
-  ${mobile({ padding: "10px" })}
-`;
-
-const Title = styled.h1`
-  font-weight: 300;
-  text-align: center;
-`;
-
-const Top = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding: 20px;
-`;
-
-const TopButton = styled.button`
-  padding: 10px;
-  font-weight: 600;
-  cursor: pointer;
-  border: ${(props) => props.type === "filled" && "none"};
-  background-color: ${(props) =>
-    props.type === "filled" ? "black" : "transparent"};
-  color: ${(props) => props.type === "filled" && "white"};
-`;
-
-const TopTexts = styled.div`
-  ${mobile({ display: "none" })}
-`;
-const TopText = styled.span`
-  text-decoration: underline;
-  cursor: pointer;
-  margin: 0px 10px;
-`;
-
-const Bottom = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
-
-const Info = styled.div`
-  flex: 3;
-`;
-
-const Product = styled.div`
-  display: flex;
-  justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
-`;
-
-const ProductDetail = styled.div`
-  flex: 2;
-  display: flex;
-`;
-
-const Image = styled.img`
-  width: 200px;
-`;
-
-const Details = styled.div`
-  padding: 20px;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-`;
-
-const ProductName = styled.span``;
-
-const ProductId = styled.span``;
-
-const ProductColor = styled.div`
-  width: 20px;
-  height: 20px;
-  border-radius: 50%;
-  background-color: ${(props) => props.color};
-`;
-
-const ProductSize = styled.span``;
-
-const PriceDetail = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-
-const ProductAmountContainer = styled.div`
-  display: flex;
-  align-items: center;
-  margin-bottom: 20px;
-`;
-
-const ProductAmount = styled.div`
-  font-size: 24px;
-  margin: 5px;
-  ${mobile({ margin: "5px 15px" })}
-`;
-
-const ProductPrice = styled.div`
-  font-size: 30px;
-  font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
-`;
-
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 1px;
-`;
-
-const Summary = styled.div`
-  flex: 1;
-  border: 0.5px solid lightgray;
-  border-radius: 10px;
-  padding: 20px;
-  height: 50vh;
-`;
-
-const SummaryTitle = styled.h1`
-  font-weight: 200;
-`;
-
-const SummaryItem = styled.div`
-  margin: 30px 0px;
-  display: flex;
-  justify-content: space-between;
-  font-weight: ${(props) => props.type === "total" && "500"};
-  font-size: ${(props) => props.type === "total" && "24px"};
-`;
-
-const SummaryItemText = styled.span``;
-
-const SummaryItemPrice = styled.span``;
-
-const Button = styled.button`
-  width: 100%;
-  padding: 10px;
-  background-color: black;
-  color: white;
-  font-weight: 600;
-`;
 
 const colorClass = (color) => {
   switch (color) {
@@ -183,21 +31,18 @@ const colorClass = (color) => {
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
-  console.log(cart.total, "this is my cart total");
+  // console.log(cart.total, "this is my cart total");
   const dispatch = useDispatch();
   //* stripe token
   const [stripeToken, setStripeToken] = useState(null);
   const [orderId, setOrderId] = useState("");
   const [paymentError, setPaymentError] = useState("");
   const [paymentSuccess, setPaymentSuccess] = useState(false);
-  console.log(cart, "this is cart");
-  console.log(stripeToken, "this is stripeToken🎂");
-
-  //*using useHistory for
-  const navigate = useNavigate();
+  // console.log(cart, "this is cart");
+  // console.log(stripeToken, "this is stripeToken🎂");
 
   // const onToken = (token) => {
-  //   console.log(token, "this is toklen🤷‍♀️");
+  // console.log(token, "this is toklen🤷‍♀️");
   //   setStripeToken(token);
   // };
 
@@ -208,10 +53,10 @@ const Cart = () => {
         total: product.price * product.quantity,
       })
     );
-    console.log(product);
+    // console.log(product);
   }, []);
 
-  console.log(stripeToken, "this is token");
+  // console.log(stripeToken, "this is token");
 
   //* using useEffect for handling stripe token
 
@@ -222,8 +67,8 @@ const Cart = () => {
   //         tokenId: stripeToken.id,
   //         amount: cart.total * 100,
   //       });
-  //       console.log(res.data, "this is bakcend ress from stripe 🍺");
-  //       console.log(cart, "this is bakcend cart");
+  // console.log(res.data, "this is bakcend ress from stripe 🍺");
+  // console.log(cart, "this is bakcend cart");
 
   //       //* going to success page after payment succession
   //       navigate("/success", {
@@ -242,7 +87,7 @@ const Cart = () => {
     script.async = true;
     document.body.appendChild(script);
 
-    // Clean up the script tag on unmount
+    //* Clean up the script tag on unmount
     return () => {
       document.body.removeChild(script);
     };
@@ -251,42 +96,39 @@ const Cart = () => {
   const openCheckout = async () => {
     try {
       const res = await axios.post(
-        "https://maya-shop-backend.onrender.com/api/checkout/payment",
+        `${process.env.REACT_APP_API}checkout/payment`,
         {
-          amount: cart.total * 83, // set the payment amount here
+          amount: cart.total * 83, //* setting the payment amount here
         }
       );
 
-      console.log(res.data, "this res.data for setting in state");
+      // console.log(res.data, "this res.data for setting in state");
       setOrderId(res.data.orderId);
 
-      // Load the Razorpay checkout form
+      //*Load the Razorpay checkout form
       const options = {
-        key: "rzp_test_5Lk8DNtlUH6L3E", // replace with your Razorpay key ID
+        key: "rzp_test_5Lk8DNtlUH6L3E",
         amount: res.data.amount,
         currency: "INR",
         name: "My App",
         description: "Payment for My App",
         order_id: res.data.id,
         handler: function (response) {
-          console.log(response);
+          // console.log(response);
           // Call the payment success API to complete the payment
           axios
-            .post(
-              "https://maya-shop-backend.onrender.com/api/razorpay/capture",
-              {
-                orderId: orderId,
-                paymentId: response.razorpay_payment_id,
-                signature: response.razorpay_signature,
-              }
-            )
+            .post(`${process.env.REACT_APP_API}checkout/capture`, {
+              orderId: orderId,
+              paymentId: response.razorpay_payment_id,
+              signature: response.razorpay_signature,
+            })
 
             .then((res) => {
-              console.log(res.data);
+              // console.log(res.data);
               setPaymentSuccess(true);
             })
             .catch((err) => {
-              console.log(err);
+              // console.log(err);
               setPaymentError(err.message);
             });
         },
@@ -310,7 +152,7 @@ const Cart = () => {
         }, 500);
       }
     } catch (err) {
-      console.log(err);
+      // console.log(err);
       setPaymentError(err.message);
     }
   };

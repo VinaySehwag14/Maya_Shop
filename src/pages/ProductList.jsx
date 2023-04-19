@@ -46,8 +46,8 @@ const ProductList = () => {
 
   const handleFilters = (e) => {
     const value = e.target.value;
-    console.log(e, "this is evetn");
-    console.log(e.target, "this is target");
+    // console.log(e, "this is evetn");
+    // console.log(e.target, "this is target");
     setFilters({
       ...filters,
       [e.target.name]: value,

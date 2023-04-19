@@ -22,7 +22,7 @@ const Newsletter = () => {
         )
         .then(
           (result) => {
-            console.log(result.text);
+            // console.log(result.text);
             setDone(true);
           },
           (error) => {

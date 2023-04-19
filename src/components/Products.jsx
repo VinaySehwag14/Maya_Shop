@@ -12,12 +12,12 @@ const Products = ({ cat, filters, sort }) => {
       try {
         const res = await axios.get(
           cat
-            ? `https://maya-shop-backend.onrender.com/api/products?category=${cat}`
-            : `https://maya-shop-backend.onrender.com/api/products`
+            ? `${process.env.REACT_APP_API}products?category=${cat}`
+            : `${process.env.REACT_APP_API}products`
         );
         setProducts(res.data);
         // console.log(products, "this is Prdopro");
-        console.log(filters, "this is filter");
+        // console.log(filters, "this is filter");
       } catch (err) {
         console.log(err);
       }

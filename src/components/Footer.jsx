@@ -13,11 +13,14 @@ const Footer = () => {
     <div className="flex flex-col sm:flex-row ">
       {/* left */}
       <div className="flex-1 flex flex-col p-[20px] ">
-        <h1 className="font-semibold text-2xl ">LAMA.</h1>
+        <h1 className="font-semibold text-2xl ">MAYA</h1>
         <p className="my-[20px] ">
-          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium,
-          adipisci natus esse qui dolorem eum non, numquam hic atque nemo sed
-          dolorum iure explicabo aliquid quam labore. Eos, nam beatae.
+          MAYA is your ultimate online destination for the latest and trendiest
+          fashion finds. Our ecommerce app offers a wide range of high-quality
+          clothing items for men, women, and children, ensuring that every
+          member of your family can find something they love. From chic dresses
+          to comfortable loungewear, from stylish shoes to versatile
+          accessories, we have it all.
         </p>
         {/* social */}
         <div className="flex space-x-[20px] ">

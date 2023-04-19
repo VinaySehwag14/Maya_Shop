@@ -25,10 +25,10 @@ const Login = () => {
     e.preventDefault();
     login(dispatch, { username, password });
   };
-  console.log(currentUser, "this is currentUser");
+  // console.log(currentUser, "this is currentUser");
 
   if (currentUser) {
-    navigate("/");
+    navigate("/login");
     return null;
   }
 
