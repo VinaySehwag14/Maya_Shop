@@ -1,54 +1,27 @@
-import styled from "styled-components";
-import { mobile } from "../responsive";
 import { Link } from "react-router-dom";
-
-const Container = styled.div`
-  flex: 1;
-  margin: 3px;
-  height: 70vh;
-  position: relative;
-`;
-const Image = styled.img`
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  ${mobile({ height: "20vh" })}
-`;
-const Info = styled.div`
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-`;
-const Title = styled.h1`
-  color: white;
-  margin-bottom: 20px;
-`;
-const Button = styled.button`
-  border: none;
-  padding: 10px;
-  background-color: white;
-  color: gray;
-  cursor: pointer;
-  font-weight: 600;
-`;
 
 const CategoryItem = ({ item }) => {
   return (
-    <Container>
+    <div className="flex-1 m-[3px] h-[70vh] relative">
       <Link to={`/products/${item.cat}`}>
-        <Image src={item.img} />
-        <Info>
-          <Title>{item.title}</Title>
-          <Button>SHOP NOW</Button>
-        </Info>
+        <img
+          className="relative w-full h-[30vh] object-cover sm:h-full border"
+          src={item.img}
+          alt="catIMg"
+        />
+        <div className="absolute h-full w-full top-0 left-0 flex items-center justify-center flex-col ">
+          <h1 className="font-semibold text-white mb-[20px] text-xl ">
+            {item.title}
+          </h1>
+          <button
+            className="p-[10px] text-sm bg-white text-gray-500 cursor-pointer
+          font-semibold "
+          >
+            SHOP NOW
+          </button>
+        </div>
       </Link>
-    </Container>
+    </div>
   );
 };
 
