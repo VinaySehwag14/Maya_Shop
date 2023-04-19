@@ -1,16 +1,18 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, DeleteOutline, Remove } from "@mui/icons-material";
 import styled from "styled-components";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import StripeCheckout from "react-stripe-checkout";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { KEY } from "../Keys";
 import { userRequest } from "../requestMethods";
 import Announcement from "../components/Announcement";
 import axios from "axios";
+import { Link } from "react-router-dom";
+import { deleteProduct, emptyCart } from "../redux/cartRedux";
 //* stripe key
 
 const Container = styled.div``;
@@ -160,8 +162,29 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+const colorClass = (color) => {
+  switch (color) {
+    case "White":
+      return "bg-[white]";
+    case "Black":
+      return "bg-[black]";
+    case "Red":
+      return "bg-[red]";
+    case "Blue":
+      return "bg-[blue]";
+    case "Green":
+      return "bg-[green]";
+    case "Brown":
+      return "bg-[brown]";
+    case "Yellow":
+      return "bg-[yellow]";
+  }
+};
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart);
+  console.log(cart.total, "this is my cart total");
+  const dispatch = useDispatch();
   //* stripe token
   const [stripeToken, setStripeToken] = useState(null);
   const [orderId, setOrderId] = useState("");
@@ -173,10 +196,20 @@ const Cart = () => {
   //*using useHistory for
   const navigate = useNavigate();
 
-  const onToken = (token) => {
-    console.log(token, "this is toklen🤷‍♀️");
-    setStripeToken(token);
-  };
+  // const onToken = (token) => {
+  //   console.log(token, "this is toklen🤷‍♀️");
+  //   setStripeToken(token);
+  // };
+
+  const handleDelete = useCallback((product) => {
+    dispatch(
+      deleteProduct({
+        id: product._id,
+        total: product.price * product.quantity,
+      })
+    );
+    console.log(product);
+  }, []);
 
   console.log(stripeToken, "this is token");
 
@@ -218,9 +251,9 @@ const Cart = () => {
   const openCheckout = async () => {
     try {
       const res = await axios.post(
-        "https://maya-shop-backend.onrender.com/api/razorpay/payment",
+        "https://maya-shop-backend.onrender.com/api/checkout/payment",
         {
-          amount: cart.total * 2000, // set the payment amount here
+          amount: cart.total * 83, // set the payment amount here
         }
       );
 
@@ -283,76 +316,115 @@ const Cart = () => {
   };
 
   return (
-    <Container>
+    <div>
       <Navbar />
       <Announcement />
-      <Wrapper>
-        <Title>YOUR BAG</Title>
-        <Top>
-          <TopButton>CONTINUE SHOPPING</TopButton>
-          <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
-          </TopTexts>
-          <TopButton type="filled">CHECKOUT NOW</TopButton>
-        </Top>
-        <Bottom>
-          <Info>
+      <div className="p-[10px] sm:p-[20px] ">
+        <h1 className="font-light text-center text-2xl ">YOUR BAG</h1>
+        <div className="flex items-center justify-between p-[20px] ">
+          <Link to="/">
+            <button className="p-[10px] font-semibold cursor-pointer bg-transparent border-2 text-xs border-black ">
+              CONTINUE SHOPPING
+            </button>
+          </Link>
+          <div className="hidden sm:block">
+            <span className="underline cursor-pointer mx-[10px] ">
+              Shopping Bag({cart.products.length})
+            </span>
+            <span className="underline cursor-pointer mx-[10px] ">
+              Your Wishlist (0)
+            </span>
+          </div>
+          <button
+            onClick={() => dispatch(emptyCart())}
+            className="p-[10px] font-semibold cursor-pointer bg-black text-white text-xs "
+            type="filled"
+          >
+            EMPTY CART
+          </button>
+        </div>
+        <div className="flex justify-between flex-col sm:flex-row ">
+          <div className="flex-[3] ">
             {cart.products.map((product) => (
-              <Product>
-                <ProductDetail>
-                  <Image src={product.img} />
-                  <Details>
-                    <ProductName>
+              <div
+                key={product._id}
+                className="flex justify-between flex-col sm:flex-row border-b "
+              >
+                <div className="flex-[2] flex ">
+                  <img
+                    src={product.img}
+                    className="relative w-[200px] h-[262px] object-contain"
+                    alt="productImg"
+                  />
+                  <div className="p-[20px] flex flex-col justify-around ">
+                    <span>
                       <b>Product:</b> {product.title}
-                    </ProductName>
-                    <ProductId>
+                    </span>
+                    <span>
                       <b>ID:</b> {product._id}
-                    </ProductId>
-                    <ProductColor color={product.color} />
-                    <ProductSize>
-                      <b>Size:</b> {product.size}
-                    </ProductSize>
-                  </Details>
-                </ProductDetail>
-                <PriceDetail>
-                  <ProductAmountContainer>
+                    </span>
+                    <span
+                      className={`w-[20px] h-[20px] rounded-full ${colorClass(
+                        product.color
+                      )} cursor-pointer `}
+                    />
+                    <span>
+                      <b>Size:</b> {product.size.toUpperCase()}
+                    </span>
+                  </div>
+                </div>
+                <div className="flex-1 flex items-center justify-center flex-col">
+                  <div className="flex items-center mb-[20px] ">
                     <Add />
-                    <ProductAmount>{product.quantity}</ProductAmount>
+                    <span className="text-[24px] my-[5px] mx-[15px] sm:mx-[5px] ">
+                      {product.quantity}
+                    </span>
                     <Remove />
-                  </ProductAmountContainer>
-                  <ProductPrice>
+                  </div>
+                  <span className="text-[30px] font-extralight mb-[20px] sm:mb-0 ">
                     $ {product.price * product.quantity}
-                  </ProductPrice>
-                </PriceDetail>
-              </Product>
+                  </span>
+                  <DeleteOutline
+                    onClick={() => handleDelete(product)}
+                    className="text-red-600 mt-6 cursor-pointer "
+                  />
+                </div>
+              </div>
             ))}
-            <Hr />
-          </Info>
-          <Summary>
-            <SummaryTitle>ORDER SUMMARY</SummaryTitle>
-            <SummaryItem>
-              <SummaryItemText>Subtotal</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Estimated Shipping</SummaryItemText>
-              <SummaryItemPrice>$ 5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem>
-              <SummaryItemText>Shipping Discount</SummaryItemText>
-              <SummaryItemPrice>$ -5.90</SummaryItemPrice>
-            </SummaryItem>
-            <SummaryItem type="total">
-              <SummaryItemText>Total</SummaryItemText>
-              <SummaryItemPrice>$ {cart.total}</SummaryItemPrice>
-            </SummaryItem>
-            <Button onClick={openCheckout}>CHECKOUT NOW</Button>
-          </Summary>
-        </Bottom>
-      </Wrapper>
+            <hr className="bg-[#eee] h-[1px] " />
+          </div>
+          <div className="flex-1 w-full border rounded-[10px] p-[20px] self-start md:h-[50vh] ">
+            <h1 className="font-extralight text-2xl ">ORDER SUMMARY</h1>
+            <div className="my-[30px] flex justify-between ">
+              <span>Subtotal</span>
+              <span>$ {cart.total}</span>
+            </div>
+            <div className="my-[30px] flex justify-between ">
+              <span>Estimated Shipping</span>
+              <span>$ 5.90</span>
+            </div>
+            <div className="my-[30px] flex justify-between ">
+              <span>Shipping Discount</span>
+              <span>$ -5.90</span>
+            </div>
+            <div
+              className="my-[30px] flex justify-between font-medium text-[24px] "
+              type="total"
+            >
+              <span>Total</span>
+              <span>$ {cart.total}</span>
+            </div>
+            <button
+              className="w-full p-[10px] bg-black text-white font-semibold "
+              onClick={openCheckout}
+            >
+              CHECKOUT NOW
+            </button>
+          </div>
+        </div>
+      </div>
       <Footer />
-    </Container>
+    </div>
   );
 };
 

@@ -1,7 +1,6 @@
 import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
@@ -13,17 +12,19 @@ import AddAlertIcon from "@mui/icons-material/AddAlert";
 
 const colorClass = (color) => {
   switch (color) {
-    case "white":
+    case "White":
       return "bg-[white]";
-    case "black":
+    case "Black":
       return "bg-[black]";
-    case "red":
+    case "Red":
       return "bg-[red]";
-    case "blue":
+    case "Blue":
       return "bg-[blue]";
-    case "green":
+    case "Green":
       return "bg-[green]";
-    case "yellow":
+    case "Brown":
+      return "bg-[brown]";
+    case "Yellow":
       return "bg-[yellow]";
   }
 };

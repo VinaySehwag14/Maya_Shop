@@ -1,6 +1,6 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { LogoutIcon } from "@heroicons/react/outline";
 import { UserGroupIcon } from "@heroicons/react/solid";
 import { useSelector, useDispatch } from "react-redux";
@@ -8,6 +8,7 @@ import { logout } from "../redux/userRedux";
 import { useCallback, useState } from "react";
 
 const Navbar = () => {
+  const navigate = useNavigate();
   const [showPopup, setShowPopup] = useState(false);
   const quantity = useSelector((state) => state.cart.quantity);
   const user = useSelector((state) => state.user.currentUser);
@@ -61,7 +62,10 @@ const Navbar = () => {
                   {user?.username.toUpperCase()}
                 </div>
                 <div
-                  onClick={handleLogout}
+                  onClick={() => {
+                    handleLogout();
+                    navigate("/login");
+                  }}
                   className={`bg-white shadow-lg absolute bottom-[-70px] ${
                     !showPopup && "opacity-0"
                   } z-[3] p-4 rounded-md flex items-center
