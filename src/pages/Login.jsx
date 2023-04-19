@@ -73,7 +73,7 @@ const Login = () => {
           <Link className="my-[5px] text-[12px] underline cursor-pointer ">
             DO NOT REMEMBER THE PASSWORD?
           </Link>
-          <Link>
+          <Link to="/register">
             <a
               href="/register"
               className="my-[5px] text-[12px] underline cursor-pointer "
