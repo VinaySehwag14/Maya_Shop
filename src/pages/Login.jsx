@@ -82,28 +82,57 @@ const Login = () => {
   };
 
   return (
-    <Container>
-      <Wrapper>
-        <Title>SIGN IN</Title>
-        <Form>
-          <Input
+    <div
+      style={{
+        background:
+          'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center',
+      }}
+      className="h-screen w-screen flex items-center justify-center bg-cover "
+    >
+      <div className="p-[20px] w-3/4 sm:w-1/4 bg-white ">
+        <h1 className="text-[24px] font-light ">SIGN IN</h1>
+        <form className="flex flex-col">
+          <input
+            type="text"
+            className="flex-1 min-w-2/5 my-[10px] p-[10px] outline-none
+          border"
             placeholder="username"
             onChange={(e) => setUsername(e.target.value)}
+            value={username}
           />
-          <Input
+          <input
             placeholder="password"
             type="password"
+            className="flex-1 min-w-2/5 my-[10px] p-[10px] outline-none
+          border "
             onChange={(e) => setPassword(e.target.value)}
+            value={password}
           />
-          <Button onClick={handleClick} disabled={isFetching}>
+          <button
+            onClick={handleClick}
+            disabled={isFetching}
+            className="w-2/5 py-[15px] px-[20px] mb-[10px] bg-[teal] text-white cursor-pointer
+            disabled:text-green-600 disabled:cursor-not-allowed "
+          >
             LOGIN
-          </Button>
-          {error && <Error>Something went wrong ... </Error>}
-          <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-          <Link>CREATE A NEW ACCOUNT</Link>
-        </Form>
-      </Wrapper>
-    </Container>
+          </button>
+          {error && (
+            <span className="text-red-500 ">Something Went Wrong...</span>
+          )}
+          <Link className="my-[5px] text-[12px] underline cursor-pointer ">
+            DO NOT REMEMBER THE PASSWORD?
+          </Link>
+          <Link>
+            <a
+              href="/register"
+              className="my-[5px] text-[12px] underline cursor-pointer "
+            >
+              CREATE A NEW ACCOUNT
+            </a>
+          </Link>
+        </form>
+      </div>
+    </div>
   );
 };
 
