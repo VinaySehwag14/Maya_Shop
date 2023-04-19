@@ -7,127 +7,88 @@ import {
   Room,
   Twitter,
 } from "@mui/icons-material";
-import styled from "styled-components";
-import { mobile } from "../responsive";
-
-const Container = styled.div`
-  display: flex;
-  ${mobile({ flexDirection: "column" })}
-`;
-const Left = styled.div`
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  padding: 20px;
-`;
-const Logo = styled.h1``;
-const Desc = styled.p`
-  margin: 20px 0px;
-`;
-const SocialContainer = styled.div`
-  display: flex; ;
-`;
-const SocialIcon = styled.div`
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  color: white;
-  background-color: #${(props) => props.color};
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-right: 20px;
-`;
-const Center = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ display: "none" })}
-`;
-
-const Title = styled.h3`
-  margin-bottom: 30px;
-`;
-const List = styled.ul`
-  margin: 0;
-  padding: 0;
-  list-style: none;
-  display: flex;
-  flex-wrap: wrap;
-`;
-const ListItem = styled.li`
-  width: 50%;
-  margin-bottom: 10px;
-`;
-const Right = styled.div`
-  flex: 1;
-  padding: 20px;
-  ${mobile({ backgroundColor: "#fff8f8" })}
-`;
-
-const ContactItem = styled.div`
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-`;
-const Payment = styled.img`
-  width: 50%; ;
-`;
 
 const Footer = () => {
   return (
-    <Container>
-      <Left>
-        <Logo>MAYA</Logo>
-        <Desc>
-          There are many variations of passages of Lorem Ipsum available, but
-          the majority have suffered alteration in some form, by injected
-          humour, or randomised words which don't look even slightly believable.
-        </Desc>
-        <SocialContainer>
-          <SocialIcon color="3B5999">
+    <div className="flex flex-col sm:flex-row ">
+      {/* left */}
+      <div className="flex-1 flex flex-col p-[20px] ">
+        <h1 className="font-semibold text-2xl ">LAMA.</h1>
+        <p className="my-[20px] ">
+          Lorem ipsum, dolor sit amet consectetur adipisicing elit. Accusantium,
+          adipisci natus esse qui dolorem eum non, numquam hic atque nemo sed
+          dolorum iure explicabo aliquid quam labore. Eos, nam beatae.
+        </p>
+        {/* social */}
+        <div className="flex space-x-[20px] ">
+          <div
+            className="w-[40px] h-[40px] rounded-full text-white bg-[#3b5999] flex
+            items-center justify-center "
+          >
             <Facebook />
-          </SocialIcon>
-          <SocialIcon color="E4405F">
+          </div>
+          <div
+            className="w-[40px] h-[40px] rounded-full text-white bg-[#e4405f] flex
+            items-center justify-center "
+          >
             <Instagram />
-          </SocialIcon>
-          <SocialIcon color="55ACEE">
+          </div>
+          <div
+            className="w-[40px] h-[40px] rounded-full text-white bg-[#55acee] flex
+            items-center justify-center "
+          >
             <Twitter />
-          </SocialIcon>
-          <SocialIcon color="E60023">
+          </div>
+          <div
+            className="w-[40px] h-[40px] rounded-full text-white bg-[#e60023] flex
+            items-center justify-center "
+          >
             <Pinterest />
-          </SocialIcon>
-        </SocialContainer>
-      </Left>
-      <Center>
-        <Title>Useful Links</Title>
-        <List>
-          <ListItem>Home</ListItem>
-          <ListItem>Cart</ListItem>
-          <ListItem>Man Fashion</ListItem>
-          <ListItem>Woman Fashion</ListItem>
-          <ListItem>Accessories</ListItem>
-          <ListItem>My Account</ListItem>
-          <ListItem>Order Tracking</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Wishlist</ListItem>
-          <ListItem>Terms </ListItem>
-        </List>
-      </Center>
-      <Right>
-        <Title>Contact</Title>
-        <ContactItem>
-          <Room style={{ marginRight: "10px" }} /> 622, Canought Place , New
-          Delhi 110037
-        </ContactItem>
-        <ContactItem>
-          <Phone style={{ marginRight: "10px" }} /> +91 88-510-39997
-        </ContactItem>
-        <ContactItem>
-          <MailOutline style={{ marginRight: "10px" }} /> contact@MAYA.com
-        </ContactItem>
-        <Payment src="https://i.ibb.co/Qfvn4z6/payment.png" />
-      </Right>
-    </Container>
+          </div>
+        </div>
+      </div>
+
+      {/* center */}
+      <div className="flex-1 p-[20px] hidden sm:block ">
+        <h1 className="font-bold mb-[30px] text-xl ">Useful Links</h1>
+        <ul className="flex flex-wrap ">
+          <li className="w-1/2 mb-[10px] ">Home</li>
+          <li className="w-1/2 mb-[10px] ">Cart</li>
+          <li className="w-1/2 mb-[10px] ">Men's Fashion</li>
+          <li className="w-1/2 mb-[10px] ">Women's Fashion</li>
+          <li className="w-1/2 mb-[10px] ">Accessories</li>
+          <li className="w-1/2 mb-[10px] ">My Account</li>
+          <li className="w-1/2 mb-[10px] ">Order Tracking</li>
+          <li className="w-1/2 mb-[10px] ">Wishlist</li>
+          <li className="w-1/2 mb-[10px] ">Terms</li>
+        </ul>
+      </div>
+
+      {/* right */}
+      <div className="flex-1 p-[20px] bg-gray-50 sm:bg-white ">
+        <h1 className="font-bold text-xl mb-[30px] ">Contact</h1>
+        <div className="mb-[20px] flex items-center ">
+          <Room className="mr-[10px] " />
+          622, Canought Place , New Delhi 110037
+        </div>
+        <div className="mb-[20px] flex items-center ">
+          <Phone className="mr-[10px] " />
+          +91 88-510-39997
+        </div>
+        <div className="mb-[20px] flex items-center ">
+          <MailOutline className="mr-[10px] " />
+          contact@MAYA.com
+        </div>
+        <div className="relative w-full md:w-1/2 h-[30px] cursor-pointer ">
+          <img
+            src="https://i.ibb.co/Qfvn4z6/payment.png"
+            layout="fill"
+            objectFit="contain"
+            alt="payment"
+          />
+        </div>
+      </div>
+    </div>
   );
 };
 

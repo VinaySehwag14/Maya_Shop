@@ -1,6 +1,5 @@
 import { Add, Remove } from "@mui/icons-material";
 import styled from "styled-components";
-import Annoucement from "../components/Announcement/Annoucement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile } from "../responsive";
@@ -10,6 +9,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 import { KEY } from "../Keys";
 import { userRequest } from "../requestMethods";
+import Announcement from "../components/Announcement";
 import axios from "axios";
 //* stripe key
 
@@ -285,7 +285,7 @@ const Cart = () => {
   return (
     <Container>
       <Navbar />
-      <Annoucement />
+      <Announcement />
       <Wrapper>
         <Title>YOUR BAG</Title>
         <Top>

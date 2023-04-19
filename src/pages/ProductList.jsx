@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Annoucement from "../components/Announcement/Annoucement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
 import Products from "../components/Products";
 import { mobile } from "../responsive";
+import Announcement from "../components/Announcement";
 
 const Container = styled.div``;
 
@@ -58,7 +58,7 @@ const ProductList = () => {
   return (
     <Container>
       <Navbar />
-      <Annoucement />
+      <Announcement />
       <Title>{cat}</Title>
       <FilterContainer>
         <Filter>

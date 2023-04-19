@@ -2,7 +2,7 @@ import { Add, Remove } from "@mui/icons-material";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
 import styled from "styled-components";
-import Annoucement from "../components/Announcement/Annoucement";
+import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import Newsletter from "../components/Newsletter";
@@ -162,7 +162,7 @@ const Product = () => {
   return (
     <Container>
       <Navbar />
-      <Annoucement />
+      <Announcement />
       <Wrapper>
         <ImgContainer>
           <Image src={product.img} />
