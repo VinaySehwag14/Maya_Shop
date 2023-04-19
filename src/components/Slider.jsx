@@ -1,80 +1,7 @@
-import styled from "styled-components";
 import ArrowLeftOutlinedIcon from "@mui/icons-material/ArrowLeftOutlined";
 import ArrowRightOutlinedIcon from "@mui/icons-material/ArrowRightOutlined";
 import { useState } from "react";
 import { sliderItems } from "../data";
-import { mobile } from "../responsive";
-
-const Container = styled.div`
-  width: 100%;
-  height: 100vh;
-  display: flex;
-  position: relative;
-  overflow: hidden;
-  ${mobile({ display: "none" })}
-`;
-
-const Arrow = styled.div`
-  width: 50px;
-  height: 50px;
-  background-color: #fff7f7;
-  border-radius: 50%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: ${(props) => props.direction === "left" && "10px"};
-  right: ${(props) => props.direction === "right" && "10px"};
-  margin: auto;
-  cursor: pointer;
-  opacity: 0.5;
-  z-index: 2;
-`;
-
-const Wrapper = styled.div`
-  height: 100%;
-  display: flex;
-  transition: all 1.5s ease;
-  transform: translateX(${(props) => props.slideIndex * -100}vw);
-`;
-
-const Slide = styled.div`
-  width: 100vw;
-  height: 100vh;
-  display: flex;
-  align-items: center;
-  background-color: #${(props) => props.bg};
-`;
-
-const Image = styled.img`
-  height: 80%;
-`;
-
-const ImgContainer = styled.div`
-  height: 100%;
-  flex: 1;
-`;
-const InfoContainer = styled.div`
-  flex: 1;
-  padding: 50px;
-`;
-const Title = styled.h1`
-  font-size: 70px;
-`;
-const Desc = styled.p`
-  margin: 50px 0px;
-  font-size: 20px;
-  font-weight: 500;
-  letter-spacing: 3px;
-`;
-const Button = styled.button`
-  padding: 10px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
-`;
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -87,28 +14,59 @@ const Slider = () => {
     }
   };
   return (
-    <Container>
-      <Arrow direction="left" onClick={() => handleClick("left")}>
+    <div className="w-full h-screen sm:flex relative overflow-hidden hidden ">
+      {/* arrow */}
+      <div
+        onClick={() => handleClick("left")}
+        className="w-[50px] h-[50px] bg-gray-100 rounded-full flex items-center justify-center
+        absolute top-0 bottom-0 m-auto left-[10px] cursor-pointer opacity-[0.5] z-[2] "
+      >
         <ArrowLeftOutlinedIcon />
-      </Arrow>
-      <Wrapper slideIndex={slideIndex}>
-        {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
-            <ImgContainer>
-              <Image src={item.img} />
-            </ImgContainer>
-            <InfoContainer>
-              <Title>{item.title}</Title>
-              <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
-            </InfoContainer>
-          </Slide>
+      </div>
+      {/* wrapper */}
+      <div
+        style={{ transform: `translateX(${slideIndex * -100}vw)` }}
+        className="h-full flex transition duration-[1.5s] "
+      >
+        {/* slides */}
+        {sliderItems.map((i) => (
+          <div
+            key={i.id}
+            style={{ backgroundColor: `#${i.bg}` }}
+            className="flex items-center w-screen h-screen "
+          >
+            <div className="flex-1 h-full relative " id="imgc">
+              <img
+                layout="fill"
+                objectFit="contain"
+                src={i.img}
+                className="h-[80%]"
+                alt="sliderimg"
+              />
+            </div>
+            <div className="flex-1 p-[50px] " id="infoc">
+              <h1 className="text-[70px] font-semibold ">{i.title}</h1>
+              <p className="my-[50px] text-[20px] font-medium tracking-[3px] ">
+                {i.desc}
+              </p>
+              <button
+                className="p-[10px] text-[14px] bg-transparent cursor-pointer border-2 
+              border-gray-800 "
+              >
+                SHOP NOW
+              </button>
+            </div>
+          </div>
         ))}
-      </Wrapper>
-      <Arrow direction="right" onClick={() => handleClick("right")}>
+      </div>
+      <div
+        onClick={() => handleClick("right")}
+        className="w-[50px] h-[50px] bg-gray-100 rounded-full flex items-center justify-center
+        absolute top-0 bottom-0 m-auto right-[10px] cursor-pointer opacity-[0.5] z-[2] "
+      >
         <ArrowRightOutlinedIcon />
-      </Arrow>
-    </Container>
+      </div>
+    </div>
   );
 };
 
