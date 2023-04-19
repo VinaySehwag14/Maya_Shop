@@ -17,7 +17,7 @@ const Products = ({ cat, filters, sort }) => {
         );
         setProducts(res.data);
         // console.log(products, "this is Prdopro");
-        // console.log(filters, "this is filter");
+        console.log(filters, "this is filter");
       } catch (err) {
         console.log(err);
       }

@@ -56,48 +56,65 @@ const ProductList = () => {
   };
 
   return (
-    <Container>
+    <div className="">
       <Navbar />
       <Announcement />
-      <Title>{cat}</Title>
-      <FilterContainer>
-        <Filter>
-          <FilterText>Filter Products:</FilterText>
-          <Select name="color" onChange={handleFilters}>
-            <Option disabled>Color</Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Brown</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
-          </Select>
-          <Select name="size" onChange={handleFilters}>
-            <Option disabled selected>
+      <h1 className="m-[20px] font-semibold text-2xl ">{cat}</h1>
+      <div className="flex justify-between ">
+        <div className="mx-[20px] sm:m-[20px] flex flex-col sm:block ">
+          <span className="text-[20px] sm:mr-[20px] font-semibold ">
+            Filter Products:
+          </span>
+          <select
+            name="color"
+            onChange={handleFilters}
+            className="p-[10px] my-[10px] sm:my-0 sm:mr-[20px] outline-none "
+          >
+            <option disabled value="">
+              Color
+            </option>
+            <option value="White">White</option>
+            <option value="Black">Black</option>
+            <option value="Red">Red</option>
+            <option value="Blue">Blue</option>
+            <option value="Brown">Brown</option>
+            <option value="Yellow">Yellow</option>
+            <option value="Green">Green</option>
+          </select>
+          <select
+            name="size"
+            onChange={handleFilters}
+            className="p-[10px] my-[10px] sm:my-0 sm:mr-[20px] outline-none "
+          >
+            <option disabled value="">
               Size
-            </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
-          </Select>
-        </Filter>
-        <Filter>
-          <FilterText>Sort Products:</FilterText>
+            </option>
+            <option value="XS">XS</option>
+            <option value="S">S</option>
+            <option value="M">M</option>
+            <option value="L">L</option>
+            <option value="XL">XL</option>
+          </select>
+        </div>
+        <div className="mx-[20px] sm:m-[20px] flex flex-col sm:block ">
+          <span className="text-[20px] sm:mr-[20px] font-semibold ">
+            Sort Products:
+          </span>
 
-          <Select onChange={(e) => setSort(e.target.value)}>
-            <Option value="newest">Newest</Option>
-            <Option value="asc">Price (asc)</Option>
-            <Option value="desc">Price (desc)</Option>
-          </Select>
-        </Filter>
-      </FilterContainer>
+          <select
+            onChange={(e) => setSort(e.target.value)}
+            className="p-[10px] my-[10px] sm:my-0 sm:mr-[20px] outline-none "
+          >
+            <option value="newest">Newest</option>
+            <option value="asc">Price (asc)</option>
+            <option value="desc">Price (desc)</option>
+          </select>
+        </div>
+      </div>
       <Products cat={cat} filters={filters} sort={sort} />
       <Newsletter />
       <Footer />
-    </Container>
+    </div>
   );
 };
 

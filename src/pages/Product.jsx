@@ -9,7 +9,6 @@ import Newsletter from "../components/Newsletter";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 import { publicRequest } from "../requestMethods";
-import { mobile } from "../responsive";
 import AddAlertIcon from "@mui/icons-material/AddAlert";
 
 const colorClass = (color) => {

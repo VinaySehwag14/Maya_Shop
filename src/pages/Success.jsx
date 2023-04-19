@@ -1,50 +1,32 @@
-import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
-import { useLocation } from "react-router";
-import { userRequest } from "../requestMethods";
+import { Link, useNavigate } from "react-router-dom";
 
 const Success = () => {
-  const location = useLocation();
-  console.log(location, "this is location in success");
-  //in Cart.jsx I sent data and cart. Please check that page for the changes.(in video it's only data)
-  const data = location.state.stripeData;
-  const cart = location.state.cart;
-  const currentUser = useSelector((state) => state.user.currentUser);
-  const [orderId, setOrderId] = useState(null);
-
-  useEffect(() => {
-    const createOrder = async () => {
-      try {
-        const res = await userRequest.post("/orders", {
-          userId: currentUser._id,
-          products: cart.products.map((item) => ({
-            productId: item._id,
-            quantity: item._quantity,
-          })),
-          amount: cart.total,
-          address: data.billing_details.address,
-        });
-        setOrderId(res.data._id);
-        console.log(res, "htis resoibse ib syccess");
-      } catch {}
-    };
-    data && createOrder();
-  }, [cart, data, currentUser]);
-
+  const navigate = useNavigate();
   return (
     <div
       style={{
-        height: "100vh",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
+        background:
+          'linear-gradient(rgba(255,255,255,0.5), rgba(255,255,255,0.5)), url("https://images.pexels.com/photos/6984650/pexels-photo-6984650.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940") center',
       }}
+      className="flex justify-center items-center h-screen "
     >
-      {orderId
-        ? `Order has been created successfully. Your order number is ${orderId}`
-        : `Successfull. Your order is being prepared...`}
-      <button style={{ padding: 10, marginTop: 20 }}>Go to Homepage</button>
+      <div className="shadow-lg border rounded-2xl p-8 flex flex-col items-center space-y-6 justify-center w-[300px] h-[450px] bg-gray-50 ">
+        <div className="relative h-[60px] w-[60px] rounded-full p-10 border-2 border-gray-500 overflow-hidden ">
+          <img
+            src="https://avatars.githubusercontent.com/u/1486366?v=4"
+            className="object-contain"
+            alt="success"
+          />
+        </div>
+        <p className="text-lg text-center ">
+          Hooray! Your Payment was successful.
+        </p>
+        <Link to="/">
+          <button className="bg-green-700 text-white p-4 transform transition duration-500 ease-in-out hover:scale-110 rounded-lg font-medium ">
+            Continue Shopping
+          </button>
+        </Link>
+      </div>
     </div>
   );
 };
